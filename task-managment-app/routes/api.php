@@ -4,6 +4,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\TokenVerificationMiddleware;
+use App\Http\Controllers\TaskController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -24,3 +25,11 @@ Route::post('/sendOtpCode',[UserController::class,'sendOtpCode']);
 Route::post('/verifyOtp',[UserController::class,'verifyOtp']);
 Route::post('/resetPassword',[UserController::class,'resetPassword'])->middleware(TokenVerificationMiddleware::class);
 Route::post('/logout',[UserController::class,'logout']);
+
+//Task Manegment
+Route::post('/task',[TaskController::class,'store'])->middleware(TokenVerificationMiddleware::class);
+Route::get('/getAllTasks',[TaskController::class,'getAllTasks'])->middleware(TokenVerificationMiddleware::class);
+Route::get('/getTask/{id}',[TaskController::class,'getTaskById'])->middleware(TokenVerificationMiddleware::class);
+Route::put('/updateTask/{id}',[TaskController::class,'updateTask'])->middleware(TokenVerificationMiddleware::class);
+Route::patch('/task/{id}/completed',[TaskController::class,'markTaskAsCompleted'])->middleware(TokenVerificationMiddleware::class);
+Route::delete('/task/{id}',[TaskController::class,'deleteTask'])->middleware(TokenVerificationMiddleware::class);
